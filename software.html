@@ -58,7 +58,16 @@
           <ul class="nav">
             <li><a href="index.html">Home</a></li>
             <li><a href="research.html">Research</a></li>
-            <li><a href="publications.html">Publications</a></li>
+
+            <li class="dropdown">
+              <a href="publications.html" class="dropdown-toggle" data-toggle="dropdown">Publications <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="publications.html#Manuscripts">Manuscripts</a></li>
+                <li><a href="publications.html#Lectures">Lectures</a></li>
+              </ul>
+            </li>
+
+
             <li class="active"><a href="software.html">Software</a></li>
             <li><a href="teaching.html">Teaching</a></li>
             <li><a href="people.html">People</a></li>
@@ -85,6 +94,16 @@
                 <li style="font-size: 10pt;">
                   <a 
                   href="https://groups.google.com/group/bedtools-discuss/">Support</a></li>
+                  
+                  <li class="nav-header" style="font-size: 12pt;">pybedtools</li>
+                  <li style="font-size: 10pt;"><a 
+                    href="https://github.com/daler/pybedtools">Details</a></li>
+                    <li style="font-size: 10pt;"><a
+                      href="http://pythonhosted.org/pybedtools/">Docs</a
+                      ></li>
+                      <li style="font-size: 10pt;">
+                        <a 
+                        href="https://groups.google.com/group/bedtools-discuss/">Support</a></li>
 
                   <li class="nav-header" style="font-size: 12pt;">gemini</li>
                   <li style="font-size: 10pt;">
@@ -146,6 +165,28 @@
                 </ul>
               </div>
             </div><!--/row-->
+            
+            <div class="row-fluid"
+            id="pybedtools">
+            <h3>pybedtools</h3>
+            <div class="span10">
+              <p>
+                <em>Pybedtools</em> is a Python wrapper (and much more) for Bedtools 
+                and extends these "genome algebra" programs by offering feature-level 
+                manipulations from with Python.  Pybedtools is maintained by Ryan Dale.
+              </p>
+            </div><!--/span-->
+            <div class="btn-group span1">
+              <a class="btn btn-primary dropdown-toggle " data-toggle="dropdown" href="#">
+                More
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <a href="http://pythonhosted.org/pybedtools/">Download</a>
+              </ul>
+            </div>
+          </div><!--/row-->
+        
 
             <div class="row-fluid"
             id="gemini">

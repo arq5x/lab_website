@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" type="text/css" charset="utf-8">
+    <title>Bingo</title>
+    
+    <style type="text/css">
+        body * { font-family: Palatino, Georgia, serif;}
+        #board {
+            border-radius: 10px;
+        }
+        .bingo-cell, .bingo-center {
+            width: 10em;
+            height: 8em;
+            display: inline-block;
+            margin: 0.2em;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body onload="">
+    <div class="container">
+        <div class="offset1 span10">
+            <div id="board"></div>
+        </div>
+    </div>
+    <div class="span4 offset6">
+        <ul class="nav nav-pills" style="text-align:center">
+            <li><a href="#" data-board="warelab">Ware Lab</a></li>
+            <li><a href="#" data-board="kbase">KBase</a></li>
+        </ul>
+    </div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function () {
+    function bingo(boardType) {
+        document.location.hash = boardType;
+        $("[data-board]").parent().removeClass('active');
+        var btn = $("[data-board*='" + boardType + "']").parent();
+        btn.addClass('active');
+        var url = "http://api.openkeyval.org/" + boardType + "_bingo";
+        $.ajax({
+            url: url,
+            dataType: 'jsonp',
+            success: function (json) {
+                var dim = 5;
+                var board = new Array();
+                for (var i = 0; i < dim; i++) {
+                    var row = new Array();
+                    for (var j = 0; j < dim; j++) {
+                        row.push(null);
+                    }
+                    board.push(row);
+                }
+                var options = json.split(/;/);
+                var target = $("#board");
+                target.empty();
+                for (var i=0; i < board.length; i++) {
+                    var row = $('<div></div>');
+                    row.addClass("bingo-row");
+                    row.addClass("row");
+                    for (var j = 0; j < board[i].length; j++) {
+                        var col = $("<button></button>");
+                        col.addClass("btn");
+                        col.addClass("btn-large");
+                        col.addClass("btn-block");
+                        if (i == 2 && j == 2) {
+                            col.html("Free Square!");
+                            col.addClass("bingo-center");
+                            col.addClass("disabled");
+                            col.addClass("btn-danger");
+                        } else {
+                            var index = Math.floor(Math.random() * (options.length - 1));
+                            var str = options.splice(index, 1);
+                            col.html(str);
+                            col.addClass("bingo-cell");
+                            col.addClass("unselected");
+                        }
+                        row.append(col);
+                    }
+                    target.append(row);
+                };
+                $("#board .bingo-cell").on('click', function () {
+                    $(this).toggleClass('btn-danger');
+                });
+            }
+        });
+    }
+    var board = "warelab";
+    if (document.location.hash) {
+        board = document.location.hash.replace(/^#/, '');
+    }
+    $("[data-board]").click(function () {
+        board = $(this).data('board');
+        bingo(board);
+        return false;
+    });
+    bingo(board);
+});
+</script>
+</body>
+
